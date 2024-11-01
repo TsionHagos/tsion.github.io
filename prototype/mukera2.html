@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform for CIS Students</title>
+    <style>
+        /* Reset some default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styling for the body and main container */
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Header section */
+        header {
+            background-color: #f1f6f7;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3ba371;
+        }
+
+        /* Navigation menu */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #3ba371;
+        }
+
+        /* Hero banner styling */
+        .banner {
+            height: 100vh;
+            background-image: url('https://source.unsplash.com/1600x900/?mountains,landscape'); /* Temporary background image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .banner .buttons {
+            margin-top: 20px;
+        }
+
+        .banner a {
+            text-decoration: none;
+            background-color: #3ba371;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        /* Content section */
+        .content {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .content h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #3ba371;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333;
+            text-align: justify;
+        }
+        
+        /* Footer section */
+        footer {
+            background-color: #f1f6f7;
+            padding: 20px;
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with logo and navigation menu -->
+    <header>
+        <div class="logo">InsightBridge</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="mini.html">Mini-Lecture</a></li>
+                <li><a href="self.html">Self-explanation Recorder</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero banner with main heading and call-to-action -->
+    <section class="banner" id="home">
+        <div>
+            <img src="C:\Users\user\Desktop\ZU freshman - 2\Entrepreneurship and Innovation\Project 2\online.avif" alt="What Great Learning Feels Like" width="100%" height="auto">
+            <h1><span style="color: #3ba371;">What Great Learning Feels Like</span></h1>
+            <p><span style="color: #3ba371;">Enhance your learning experience with our platform.</span></p>
+            <div class="buttons">
+                <a href="mini.html">Mini-Lecture</a>
+                <a href="self.html">Self-explanation Recorder</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content section -->
+    <section class="content" id="features">
+        <h2>About InsightBridge</h2>
+        <p>
+            InsightBridge is designed to help CIS students manage their pre-class workload more effectively.
+            With access to readings, lecture notes, polls, and breakout questions, you can prioritize important concepts and boost your understanding.
+            The self-explanation recorder also provides feedback to improve your accuracy and build confidence in class.
+        </p>
+    </section>
+
+    <!-- Footer section -->
+    <footer>
+        &copy; 2024 Organify Platform. All Rights Reserved.
+    </footer>
+</body>
+</html>

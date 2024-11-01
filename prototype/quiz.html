@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-explanation Recorder</title>
+    <style>
+        /* Basic styling for the container */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            border: 2px solid #333;
+            padding: 20px;
+            width: 600px;
+            background-color: white;
+            text-align: center;
+            position: relative;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5733;
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 20px;
+            color: red;
+            margin-bottom: 20px;
+        }
+        .question-section {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .option {
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            flex: 1 1 45%;
+            text-align: center;
+        }
+        .selected {
+            background-color: #c0c0ff;
+        }
+        .session-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .session-info div {
+            width: 45%;
+        }
+        .session-table, .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .session-table td, .score-table td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">Let's Go!</div>
+    <div class="question-section">Select the correct answer:</div>
+    <div class="question">Which of the following is NOT a fear that holds people back from being creative?</div>
+    <div class="timer" id="timer">Time Remaining: 10:00</div>
+
+    <div class="options">
+        <div class="option" onclick="selectOption(this)">Fear of snakes</div>
+        <div class="option" onclick="selectOption(this)">Fear of the messy unknown</div>
+        <div class="option" onclick="selectOption(this)">Fear of being judged</div>
+        <div class="option" onclick="selectOption(this)">Fear of the first step</div>
+    </div>
+    <button onclick="submitAnswer()">Submit Answer</button>
+
+    <div class="feedback" id="feedback"></div>
+
+    <div class="session-info">
+        <div>
+            <span>Session IDs</span>
+            <table class="session-table">
+                <tr>
+                    <td><input type="checkbox"> IDS101</td>
+                    <td><input type="checkbox"> IDS220</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"> IDS105</td>
+                    <td><input type="checkbox"> IDS210</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <span>Well Done / Score</span>
+            <table class="score-table">
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Timer functionality
+    let timeLeft = 10 * 60; // 10 minutes in seconds
+    const timerElement = document.getElementById('timer');
+    const feedbackElement = document.getElementById('feedback');
+    let selectedOption = null;
+
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerElement.innerText = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        timeLeft--;
+        
+        if (timeLeft < 0) {
+            clearInterval(timerInterval);
+            feedbackElement.innerText = "Time's up! Please try again.";
+            feedbackElement.style.color = "red";
+        }
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Selecting an option
+    function selectOption(optionElement) {
+        // Remove selection from all options
+        document.querySelectorAll('.option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        // Mark selected option
+        optionElement.classList.add('selected');
+        selectedOption = optionElement.innerText;
+    }
+
+    // Submitting an answer
+    function submitAnswer() {
+        if (!selectedOption) {
+            feedbackElement.innerText = "Please select an option.";
+            feedbackElement.style.color = "orange";
+            return;
+        }
+        
+        if (selectedOption === "Fear of snakes") {
+            feedbackElement.innerText = "Correct! Fear of snakes is not related to creativity.";
+            feedbackElement.style.color = "green";
+        } else {
+            feedbackElement.innerText = "Incorrect. Try thinking about which fears impact creativity.";
+            feedbackElement.style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>

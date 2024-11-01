@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Lecture Platform</title>
+    <style>
+        /* Basic styling for readability */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7e9;
+            color: #3ba371;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Header styling with increased height */
+        header {
+            background-color: #004d26;
+            color: white;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            font-size: 20px;
+            padding: 10px 0; /* Added padding for better fit */
+            height: 60px; /* Increased height */
+            line-height: 1.2;
+        }
+        
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            padding: 20px;
+            background-color: #b3e6c5;
+            height: calc(100vh - 60px); /* Adjusted for header */
+            position: fixed;
+            top: 60px; /* Adjusted for header */
+            left: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 16px;
+            color: #004d26;
+            margin-top: 10px;
+        }
+
+        .sidebar select, .sidebar .checkbox-group label {
+            display: block;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #004d26;
+            width: 100%;
+        }
+        
+        /* Main content styling */
+        main {
+            padding: 20px;
+            margin-left: 270px; /* Adjusted for sidebar width */
+            padding-top: 80px; /* Adjusted for header height */
+            width: calc(100% - 270px);
+            height: calc(100vh - 60px); /* Adjusted for header */
+            overflow-y: auto;
+        }
+
+        .lecture-content {
+            border: 2px solid #004d26;
+            padding: 20px;
+            background-color: #f0fff5;
+            position: relative;
+            min-height: 200px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Video controls at bottom of lecture content */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+        }
+
+        .pause-button, .lecture-timer {
+            font-size: 14px;
+            color: white;
+            background-color: #004d26;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Sections for sources and objectives */
+        .sources, .objectives {
+            border: 1px solid #004d26;
+            padding: 15px;
+            background-color: #f0fff5;
+            margin-bottom: 15px;
+        }
+
+        /* Options buttons */
+        .options button {
+            background-color: #004d26;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mini-Lecture</h1>
+</header>
+
+<!-- Sidebar for course and session selection -->
+<aside class="sidebar">
+    <section>
+        <h2>Select a Course</h2>
+        <select id="course-selection">
+            <option value="course1">IDS220: Entrepreneurship & Innovation</option>
+            <option value="course2">IDS101: Critique and Communication</option>
+            <option value="course3">IDS103: Statistical Intuitions & App.</option>
+            <option value="course4">IDS105: Systems and Society</option>
+        </select>
+    </section>
+
+    <section>
+        <h2>Select Sessions</h2>
+        <div class="checkbox-group">
+            <label><input type="checkbox" value="session1"> Session 1</label>
+            <label><input type="checkbox" value="session2"> Session 2</label>
+            <label><input type="checkbox" value="session3"> Session 3</label>
+            <label><input type="checkbox" value="session4"> Session 4</label>
+            <label><input type="checkbox" value="session5"> Session 5</label>
+        </div>
+    </section>
+</aside>
+
+<main>
+    <section>
+        <h2>Lecture Content</h2>
+        <div class="lecture-content">
+            <p>Many people are born creative, but they lose their creative confidence over time. There are a number of reasons why people may lose their confidence: these reasons include the fear of the unknown, fear of being judged, fear of taking the first step, and fear of losing control. People can regain their creative confidence by taking small steps and building on their successes. They can also learn from their failures and use them as an opportunity to grow.</p>
+            
+            <!-- Timer and Pause Button at the Bottom -->
+            <div class="controls">
+                <button class="pause-button" onclick="togglePlayPause()">⏸️</button>
+                <div class="lecture-timer">1:00 / 30:00</div>
+            </div>
+        </div>
+
+        <!-- Options for transcript and download -->
+        <div class="options">
+            <button onclick="copyTranscript()">Copy Transcript</button>
+            <button onclick="downloadMP3()">Download in MP3</button>
+            <button onclick="downloadMP4()">Download in MP4</button>
+        </div>
+    </section>
+
+    <!-- Sources Section -->
+    <section>
+        <div class="sources">
+            <div class="sources-title">Sources</div>
+            <p>- Article: Kelley, D. (2012) "How to Build Your Creative Confidence"</p>
+            <p>- Video: John Spencer "Growth Mindset vs Fixed Mindset"</p>
+        </div>
+    </section>
+
+    <!-- Learning Objectives and Vocabulary Section -->
+    <section>
+        <div class="objectives">
+            <div class="objectives-title">Learning Objectives & Vocabulary</div>
+            <p># LO1: Vocabulary</p>
+            <p># LO2: Creativity and Growth Mindset</p>
+        </div>
+    </section>
+</main>
+
+<script>
+    let isPaused = true;
+
+    // Toggle Play/Pause functionality
+    function togglePlayPause() {
+        const button = document.querySelector('.pause-button');
+        if (isPaused) {
+            button.textContent = '▶️'; // Change to Play icon
+            isPaused = false;
+        } else {
+            button.textContent = '⏸️'; // Change to Pause icon
+            isPaused = true;
+        }
+    }
+
+    // Functions for transcript and download (placeholders)
+    function copyTranscript() {
+        alert("Transcript copied to clipboard.");
+    }
+
+    function downloadMP3() {
+        alert("Downloading MP3...");
+    }
+
+    function downloadMP4() {
+        alert("Downloading MP4...");
+    }
+</script>
+
+</body>
+</html>

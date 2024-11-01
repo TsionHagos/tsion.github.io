@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Explanatory Recorder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7e9;
+            color: #3ba371;
+            display: flex;
+        }
+        .sidebar {
+            width: 25%;
+            padding: 20px;
+            background-color: #a7f3d0;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .content {
+            width: 75%;
+            display: flex; /* Enable flex layout for content */
+        }
+        .transcript-container {
+            width: 70%; /* Adjust width for transcript area */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .corrections-container {
+            width: 30%; /* Width for corrections area */
+            padding: 20px;
+            border-left: 1px solid #ddd; /* Visual separation */
+            background-color: #ffffff; /* Background color for corrections */
+        }
+        h1 {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 span {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        .record-section {
+            font-size: 24px;
+            color: #22c55e;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .record-section:active {
+            color: #15803d;
+        }
+        .course-selection, .session-selection, .source-section {
+            margin-bottom: 20px;
+        }
+        .transcript-section {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .transcript {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+        .save-button, .edit-button, .download-button, .upload-button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            background-color: #22c55e;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .save-button:hover, .edit-button:hover, .download-button:hover, .upload-button:hover {
+            background-color: #15803d;
+        }
+        .corrections h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h1><span>🤓</span> Hey! Your smart friend here. Hmm... let's see how much you understood your readings.</h1>
+    
+    <!-- Course Selection -->
+    <div class="course-selection">
+        <h3>Courses</h3>
+        <label><input type="radio" name="course" value="IDS101"> IDS101: Critique and Communication</label><br>
+        <label><input type="radio" name="course" value="IDS103"> IDS103: Statistical Intuitions & App.</label><br>
+        <label><input type="radio" name="course" value="IDS105"> IDS105: Systems and Society</label><br>
+        <label><input type="radio" name="course" value="IDS220"> IDS220: Entrepreneurship & Innovation</label><br>
+    </div>
+
+    <!-- Session Selection -->
+    <div class="session-selection">
+        <h3>Sessions</h3>
+        <label><input type="checkbox" name="session" value="1"> Session 1</label><br>
+        <label><input type="checkbox" name="session" value="2"> Session 2</label><br>
+        <label><input type="checkbox" name="session" value="3"> Session 3</label><br>
+        <label><input type="checkbox" name="session" value="4"> Session 4</label><br>
+        <label><input type="checkbox" name="session" value="5"> Session 5</label><br>
+    </div>
+
+    <!-- Add Sources -->
+    <div class="source-section">
+        <h3>Additional Sources</h3>
+        <input type="file" class="upload-button" id="upload" onchange="previewFile()">
+        <p id="file-preview">No file selected</p>
+    </div>
+</div>
+
+<div class="content">
+    <!-- Transcript Section -->
+    <div class="transcript-container">
+        <div class="record-section" onclick="toggleRecording()">🎙 Tap to Record</div>
+        <div class="transcript-section">
+            <h3>Transcript</h3>
+            <textarea class="transcript" id="transcript" placeholder="Recording transcript will appear here..."></textarea>
+            <button class="save-button" onclick="saveTranscript()">Save</button>
+            <button class="edit-button" onclick="editTranscript()">Edit</button>
+            <button class="download-button" onclick="downloadTranscript()">Download</button>
+        </div>
+    </div>
+    
+    <!-- Corrections Section -->
+    <div class="corrections-container">
+        <h3>Corrections</h3>
+        <p>This section will display correction suggestions based on your responses.</p>
+    </div>
+</div>
+
+<script>
+    let isRecording = false;
+    let transcript = document.getElementById('transcript');
+    let filePreview = document.getElementById('file-preview');
+
+    function toggleRecording() {
+        isRecording = !isRecording;
+        document.querySelector('.record-section').textContent = isRecording ? '🎙 Recording...' : '🎙 Tap to Record';
+
+        if (isRecording) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+
+    function startRecording() {
+        transcript.placeholder = "Recording...";
+        setTimeout(() => {
+            transcript.value = "Sample transcript of recorded audio.";
+        }, 2000);
+    }
+
+    function stopRecording() {
+        transcript.placeholder = "Recording stopped.";
+    }
+
+    function saveTranscript() {
+        alert("Transcript saved!");
+    }
+
+    function editTranscript() {
+        transcript.removeAttribute('readonly');
+        transcript.focus();
+    }
+
+    function downloadTranscript() {
+        const blob = new Blob([transcript.value], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'transcript.txt';
+        link.click();
+    }
+
+    function previewFile() {
+        const file = document.getElementById('upload').files[0];
+        if (file) {
+            filePreview.textContent = `Selected file: ${file.name}`;
+        } else {
+            filePreview.textContent = 'No file selected';
+        }
+    }
+</script>
+
+</body>
+</html>
